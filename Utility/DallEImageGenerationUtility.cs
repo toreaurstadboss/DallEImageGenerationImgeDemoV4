@@ -40,7 +40,7 @@ namespace DallEImageGenerationDemo.Utility
             string imagedescription, ImageGenerationOptions? options = null)
         {
             GeneratedImage generatedImage = await GenerateDallEImageAsync(imageClient, imagedescription, options);
-            string preamble = "data:image/png;base64";
+            string preamble = "data:image/png;base64,";
             return $"{preamble}{Convert.ToBase64String(generatedImage.ImageBytes.ToArray())}";
         }
 
