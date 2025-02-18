@@ -20,7 +20,7 @@ namespace DallEImageGenerationDemo.Utility
             options = options ?? new ImageGenerationOptions
             {
                 Quality = GeneratedImageQuality.Standard,
-                Size = GeneratedImageSize.W512xH512,
+                Size = GeneratedImageSize.W1024xH1024,
                 Style = GeneratedImageStyle.Natural,
             };
             options.ResponseFormat = GeneratedImageFormat.Bytes;

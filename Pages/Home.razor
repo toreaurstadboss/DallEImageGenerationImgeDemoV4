@@ -3,11 +3,24 @@
 @using DallEImageGenerationImageDemoV4.Models
 @using DallEImageGenerationImageDemoV4.Utility
 @using OpenAI.Images
+@inject IJSRuntime JSRuntime
 
 <PageTitle>Home</PageTitle>
 <h3>Generate OpenAI DALL-e-3 image</h3>
 
 <div class="container mt-4">
+
+    <!-- Spinner at the top -->
+    @if (isLoading)
+    {
+        <div class="d-flex justify-content-center mb-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>               
+            </div>
+
+            <p>Dall-3-e image being created.. </p>
+        </div>
+    }
 
     <EditForm Model="@homeModel" OnValidSubmit="HandleValidSubmit">
         <DataAnnotationsValidator />
@@ -37,7 +50,7 @@
             <ValidationMessage For="@(() => homeModel.Style)" class="text-danger" />
         </div>
         <br />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" disabled="@isLoading">Submit</button>
         <br /><br />
 
     </EditForm>
@@ -48,8 +61,26 @@
 {
     <div class="card-body">
         <div class="card-header"><b>Generated DALL-e-3 image</b></div>
-
         <img src="@ImageData" title="Generated DALL-e image" />
-
     </div>
+
 }
+
+<!-- Bootstrap Modal -->
+<div class="modal fade justify-content-center" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Generated Image</h5>
+                <p class="text-muted text-sm-center">@homeModel.Description</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <img src="@ImageData" alt="Generated Image" class="img-fluid" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

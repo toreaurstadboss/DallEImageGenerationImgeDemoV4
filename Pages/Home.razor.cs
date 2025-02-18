@@ -2,6 +2,7 @@ using DallEImageGenerationDemo.Components.Pages;
 using DallEImageGenerationDemo.Utility;
 using DallEImageGenerationImageDemoV4.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using OpenAI.Images;
 using System.Data;
 
@@ -11,6 +12,7 @@ public partial class Home : ComponentBase
 {
 
     private HomeModel homeModel = new HomeModel();
+    private bool isLoading { get; set; }
 
     [Inject]
     public required IConfiguration Config { get; set; }
@@ -28,6 +30,8 @@ public partial class Home : ComponentBase
 
     protected async Task HandleValidSubmit()
     {
+        isLoading = true;
+
         string generatedImageBase64 = await imageClient.GenerateDalleImageBass64JsonAsync(homeModel.Description!,
             new ImageGenerationOptions
             {
@@ -36,6 +40,15 @@ public partial class Home : ComponentBase
                 Size = MapSize(homeModel.Size)                
             });
         ImageData = generatedImageBase64;
+
+        if (!string.IsNullOrWhiteSpace(ImageData))
+        {
+            // Open the modal
+            await JSRuntime.InvokeVoidAsync("showModal", "imageModal");
+        }
+
+        isLoading = false;
+        StateHasChanged();
     }
 
     private GeneratedImageSize MapSize(ImageSize size) => size switch
