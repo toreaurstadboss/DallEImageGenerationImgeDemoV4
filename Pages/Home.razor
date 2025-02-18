@@ -1,7 +1,55 @@
 ﻿@page "/"
+@using DallEImageGenerationDemo.Utility
+@using DallEImageGenerationImageDemoV4.Models
+@using DallEImageGenerationImageDemoV4.Utility
+@using OpenAI.Images
 
 <PageTitle>Home</PageTitle>
+<h3>Generate OpenAI DALL-e-3 image</h3>
 
-<h1>Hello, world!</h1>
+<div class="container mt-4">
 
-Welcome to your new app.
+    <EditForm Model="@homeModel" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="Description" class="form-label fw-bold">Description</label>
+            <InputTextArea id="Description" name="Description" @bind-Value="homeModel.Description" class="form-control" />
+            <ValidationMessage For="@(() => homeModel.Description)" class="text-danger" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <label for="Quality" class="form-class fw-bold">GeneratedImageQuality</label>
+            @EnumHelper.GenerateEnumDropDown(homeModel.Quality, EventCallback.Factory.Create<ImageQuality>(this, v => homeModel.Quality = v), () => homeModel.Quality)
+            <ValidationMessage For="@(() => homeModel.Quality)" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="Size" class="form-label fw-bold">GeneratedImageSize</label>
+            @EnumHelper.GenerateEnumDropDown(homeModel.Size, EventCallback.Factory.Create<ImageSize>(this, v => homeModel.Size = v), () => homeModel.Size)
+            <ValidationMessage For="@(() => homeModel.Size)" class="text-danger" />
+        </div>
+        <div class="form-group">
+            <label for="Style" class="form-label fw-bold">GeneratedImageStyle</label>
+            @EnumHelper.GenerateEnumDropDown(homeModel.Style, EventCallback.Factory.Create<ImageStyle>(this, v => homeModel.Style = v), () => homeModel.Style)
+            <ValidationMessage For="@(() => homeModel.Style)" class="text-danger" />
+        </div>
+        <br />
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <br /><br />
+
+    </EditForm>
+
+</div>
+
+@if (!string.IsNullOrWhiteSpace(ImageData))
+{
+    <div class="card-body">
+        <div class="card-header"><b>Generated DALL-e-3 image</b></div>
+
+        <img src="@ImageData" title="Generated DALL-e image" />
+
+    </div>
+}
