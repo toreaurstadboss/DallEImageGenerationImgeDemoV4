@@ -1,10 +1,10 @@
 ﻿namespace DallEImageGenerationImageDemoV4.Models
 {
-   
+
     public enum ImageQuality
     {
+        High,
         Standard,
-        High
     }
 
     public enum ImageSize
@@ -16,8 +16,8 @@
 
     public enum ImageStyle
     {
-        Natural,
-        Vivid
+        Vivid,
+        Natural
     }
 
 

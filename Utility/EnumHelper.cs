@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
 using System.Linq.Expressions;
 
 namespace DallEImageGenerationImageDemoV4.Utility
@@ -27,7 +26,7 @@ namespace DallEImageGenerationImageDemoV4.Utility
                 builder.AddAttribute(1, "Value", selectedValue);
                 builder.AddAttribute(2, "ValueChanged", valueChanged);
                 builder.AddAttribute(3, "ValueExpression", valueExpression);
-                builder.AddAttribute(4, "class", "form-control");  // Adding Bootstrap class for styling
+                builder.AddAttribute(4, "class", "form-select");  // Adding Bootstrap class for styling
                 builder.AddAttribute(5, "ChildContent", (RenderFragment)(childBuilder =>
                 {
                     foreach (var value in Enum.GetValues(typeof(TEnum)))

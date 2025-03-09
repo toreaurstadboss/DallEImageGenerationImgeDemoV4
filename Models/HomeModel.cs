@@ -7,7 +7,7 @@ public class HomeModel
 {
 
     [Required(ErrorMessage = "Provide a description")]
-    public string Description { get; set; }
+    public string? Description { get; set; } = default;
 
     [Required(ErrorMessage = "Select image quality")]
     public ImageQuality Quality { get; set; }

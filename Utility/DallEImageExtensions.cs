@@ -1,9 +1,8 @@
 using OpenAI.Images;
-using System.Runtime.CompilerServices;
 
 namespace DallEImageGenerationDemo.Utility
 {
-    public static class DallEImageGenerationUtility
+    public static class DallEImageExtensions
     {
 
         /// <summary>
@@ -19,9 +18,9 @@ namespace DallEImageGenerationDemo.Utility
         {
             options = options ?? new ImageGenerationOptions
             {
-                Quality = GeneratedImageQuality.Standard,
+                Quality = GeneratedImageQuality.High,
                 Size = GeneratedImageSize.W1024xH1024,
-                Style = GeneratedImageStyle.Natural,
+                Style = GeneratedImageStyle.Vivid,
             };
             options.ResponseFormat = GeneratedImageFormat.Bytes;
             return await imageClient.GenerateImageAsync(imagedescription, options);
@@ -36,7 +35,7 @@ namespace DallEImageGenerationDemo.Utility
         /// <param name="imagedescription"></param>
         /// <param name="options">Send in options for the image generation. If no options are sent, a 512x512 natural image in response format bytes will be returned</param>
         /// <returns></returns>
-        public static async Task<string> GenerateDalleImageBass64JsonAsync(this ImageClient imageClient,
+        public static async Task<string> GenerateDallEImageB64StringAsync(this ImageClient imageClient,
             string imagedescription, ImageGenerationOptions? options = null)
         {
             GeneratedImage generatedImage = await GenerateDallEImageAsync(imageClient, imagedescription, options);

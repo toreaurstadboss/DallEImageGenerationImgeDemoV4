@@ -101,3 +101,13 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+#suggestbtn {
+    margin-top: 20px;
+    /*background-color:aliceblue;*/
+    color:black;
+}
+
+#Description {
+    min-height:300px;
+}
