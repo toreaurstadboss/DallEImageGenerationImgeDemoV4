@@ -1,11 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Resources;
 
 namespace DallEImageGenerationImageDemoV4.Utility
 {
+  
     public static class EnumHelper
     {
+      
         public static RenderFragment GenerateEnumDropDown<TEnum>(TEnum selectedValue,
             EventCallback<TEnum> valueChanged,
             Expression<Func<TEnum>> valueExpression) where TEnum : Enum
@@ -33,12 +37,41 @@ namespace DallEImageGenerationImageDemoV4.Utility
                     {
                         childBuilder.OpenElement(6, "option");
                         childBuilder.AddAttribute(7, "value", value?.ToString());
-                        childBuilder.AddContent(8, value?.ToString()?.Replace("_", " ")); // Ensure the display text is clean
+                        childBuilder.AddContent(8, GetEnumOptionDisplayText(value)?.ToString()?.Replace("_", " ")); // Ensure the display text is clean
                         childBuilder.CloseElement();
                     }
                 }));
                 builder.CloseComponent();
             };
         }
+
+        /// <summary>
+        /// Retrieves the display text of an enum alternative 
+        /// </summary>
+        private static string? GetEnumOptionDisplayText<T>(T value)
+        {
+            string? result = value!.ToString()!; 
+
+            var displayAttribute = value
+                .GetType()
+                .GetField(value!.ToString()!)
+                ?.GetCustomAttributes(typeof(DisplayAttribute), false)?
+                .OfType<DisplayAttribute>()
+                .FirstOrDefault();
+            if (displayAttribute != null)
+            {
+                if (displayAttribute.ResourceType != null && !string.IsNullOrWhiteSpace(displayAttribute.Name))
+                {
+                    result = new ResourceManager(displayAttribute.ResourceType).GetString(displayAttribute!.Name!);                    
+                }
+                else if (!string.IsNullOrWhiteSpace(displayAttribute.Name))
+                {
+                    result = displayAttribute.Name;
+                }           
+            }
+            return result;          
+        }
+
+
     }
 }
