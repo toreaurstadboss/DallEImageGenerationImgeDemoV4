@@ -8,17 +8,12 @@ namespace DallEImageGenerationImageDemoV4.Utility
     /// <summary>
     /// Creates AzureOpenAIClient or ChatClient (default ai model (LLM) is set to "gpt-4")
     /// </summary>
-    public class OpenAIChatClientBuilder
+    public class OpenAIChatClientBuilder(IConfiguration configuration)
     {
 
         private string? _endpoint = null;
         private ApiKeyCredential? _key = null;
-        private readonly IConfiguration _configuration;
-
-        public OpenAIChatClientBuilder(IConfiguration configuration)
-        {
-            _configuration = configuration;
-        }
+        private readonly IConfiguration _configuration = configuration;
 
         /// <summary>
         /// Set the endpoint for Open AI Chat GPT-4 chat client. Defaults to config setting 'ChatGpt4:Endpoint' inside the appsettings.json file

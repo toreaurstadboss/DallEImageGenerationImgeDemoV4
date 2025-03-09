@@ -24,9 +24,9 @@ public partial class Home : ComponentBase
     [Inject]
     public required IOpenAiChatClientBuilderFactory OpenAIChatClientFactory { get; set; }
 
-    private HomeModel homeModel = new HomeModel();
+    private readonly HomeModel homeModel = new();
 
-    private bool isLoading { get; set; }
+    private bool IsLoading { get; set; }
 
     private string ImageData { get; set; } = string.Empty;
 
@@ -41,7 +41,17 @@ public partial class Home : ComponentBase
             return;
         }
 
-        string description = "You are specifying instructions for generating a DALL-e-3 image. Only provide one suggestion. The suggestion should be based from this input and randomize what to display: Suggests a cozy vivid location set in Norway showing outdoor scenery in good weather at different places and with nice weather aimed to attract tourists";
+        string description = """
+            You are specifying instructions for generating a DALL-e-3 image.
+            Do not always choose Bergen! Also choose among smaller cities, villages and different locations in Norway.
+             Just generate one image, not a montage. Only provide one suggestion. 
+             The suggestion should be based from this input and randomize what to display: 
+             Suggests a cozy vivid location set in Norway showing outdoor scenery in good weather at different places 
+             and with nice weather aimed to attract tourists. Note - it should also display both urban,
+             suburban or nature scenery with a variance of which of these three types of locations to show.
+             It should also include some Norwegian animals and flowers and show people. It should pick random cities and places in Norway to display.
+""";
+            
 
         homeModel.Description = string.Empty; 
 
@@ -55,7 +65,7 @@ public partial class Home : ComponentBase
 
     protected async Task HandleValidSubmit()
     {
-        isLoading = true;
+        IsLoading = true;
 
         string generatedImageBase64 = await DallEImageClient.GenerateDallEImageB64StringAsync(homeModel.Description!,
             new ImageGenerationOptions
@@ -72,24 +82,24 @@ public partial class Home : ComponentBase
             await JSRuntime.InvokeVoidAsync("showModal", "imageModal");
         }
 
-        isLoading = false;
+        IsLoading = false;
         StateHasChanged();
     }
 
-    private GeneratedImageSize MapSize(ImageSize size) => size switch
+    private static GeneratedImageSize MapSize(ImageSize size) => size switch
     {
         ImageSize.W1024xH1792 => GeneratedImageSize.W1024xH1792,
         ImageSize.W1792H1024 => GeneratedImageSize.W1792xH1024,
         _ => GeneratedImageSize.W1024xH1024,
     };
 
-    private GeneratedImageStyle MapStyle(ImageStyle style) => style switch
+    private static GeneratedImageStyle MapStyle(ImageStyle style) => style switch
     {
         ImageStyle.Vivid => GeneratedImageStyle.Vivid,
         _ => GeneratedImageStyle.Natural
     };
 
-    private GeneratedImageQuality MapQuality(ImageQuality quality) => quality switch
+    private static GeneratedImageQuality MapQuality(ImageQuality quality) => quality switch
     {
         ImageQuality.High => GeneratedImageQuality.High,
         _ => GeneratedImageQuality.Standard
