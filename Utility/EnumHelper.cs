@@ -10,10 +10,12 @@ namespace DallEImageGenerationImageDemoV4.Utility
     public static class EnumHelper
     {
       
-        public static RenderFragment GenerateEnumDropDown<TEnum>(TEnum selectedValue,
-            EventCallback<TEnum> valueChanged,
-            Expression<Func<TEnum>> valueExpression) where TEnum : Enum
+        public static RenderFragment GenerateEnumDropDown<TEnum>(
+            TEnum selectedValue,
+            EventCallback<TEnum> valueChanged) 
+            where TEnum : Enum
         {
+            Expression<Func<TEnum>> valueExpression = () => selectedValue;
             return builder =>
             {
                 // Set the selectedValue to the first enum value if it is not set

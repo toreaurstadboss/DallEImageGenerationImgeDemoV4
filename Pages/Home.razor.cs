@@ -67,6 +67,8 @@ public partial class Home : ComponentBase
     {
         IsLoading = true;
 
+        Console.WriteLine($"Image style: {homeModel.Style}, Image size: {homeModel.Size} Quality: {homeModel.Quality}");
+
         string generatedImageBase64 = await DallEImageClient.GenerateDallEImageB64StringAsync(homeModel.Description!,
             new ImageGenerationOptions
             {

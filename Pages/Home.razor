@@ -42,17 +42,17 @@
 
                 <div class="form-group">
                     <label for="Quality" class="form-class fw-bold">GeneratedImageQuality</label>
-                    @EnumHelper.GenerateEnumDropDown(homeModel.Quality, EventCallback.Factory.Create<ImageQuality>(this, v => homeModel.Quality = v), () => homeModel.Quality)
+                    @EnumHelper.GenerateEnumDropDown(homeModel.Quality, EventCallback.Factory.Create<ImageQuality>(this, v => homeModel.Quality = v))
                     <ValidationMessage For="@(() => homeModel.Quality)" class="text-danger" />
                 </div>
                 <div class="form-group">
                     <label for="Size" class="form-label fw-bold">GeneratedImageSize</label>
-                    @EnumHelper.GenerateEnumDropDown(homeModel.Size, EventCallback.Factory.Create<ImageSize>(this, v => homeModel.Size = v), () => homeModel.Size)
+                    @EnumHelper.GenerateEnumDropDown(homeModel.Size, EventCallback.Factory.Create<ImageSize>(this, v => homeModel.Size = v))
                     <ValidationMessage For="@(() => homeModel.Size)" class="text-danger" />
                 </div>
                 <div class="form-group">
                     <label for="Style" class="form-label fw-bold">GeneratedImageStyle</label>
-                    @EnumHelper.GenerateEnumDropDown(homeModel.Style, EventCallback.Factory.Create<ImageStyle>(this, v => homeModel.Style = v), () => homeModel.Style)
+                    @EnumHelper.GenerateEnumDropDown(homeModel.Style, EventCallback.Factory.Create<ImageStyle>(this, v => homeModel.Style = v))
                     <ValidationMessage For="@(() => homeModel.Style)" class="text-danger" />
                 </div>
                 <br />
