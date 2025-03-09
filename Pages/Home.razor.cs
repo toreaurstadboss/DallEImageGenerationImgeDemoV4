@@ -50,6 +50,7 @@ public partial class Home : ComponentBase
              and with nice weather aimed to attract tourists. Note - it should also display both urban,
              suburban or nature scenery with a variance of which of these three types of locations to show.
              It should also include some Norwegian animals and flowers and show people. It should pick random cities and places in Norway to display.
+             Suggest places from different counties, like Larvik, Steinkjer, Oppdal and nature places such as Femunden and Glomma.
 """;
             
 

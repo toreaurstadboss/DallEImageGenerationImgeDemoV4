@@ -21,7 +21,7 @@ namespace DallEImageGenerationImageDemoV4.Models
         [Display(Name = "W1024xH1792")]
         W1024xH1792,
 
-        [Display(Name = "W1024xH1792")]
+        [Display(Name = "W1792H1024")]
         W1792H1024
     }
 

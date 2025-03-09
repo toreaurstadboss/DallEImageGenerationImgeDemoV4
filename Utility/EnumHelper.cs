@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using DallEImageGenerationImageDemoV4.Models;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
@@ -11,11 +12,13 @@ namespace DallEImageGenerationImageDemoV4.Utility
     {
       
         public static RenderFragment GenerateEnumDropDown<TEnum>(
+            object receiver,
             TEnum selectedValue,
-            EventCallback<TEnum> valueChanged) 
+            Action<TEnum> valueChanged) 
             where TEnum : Enum
         {
-            Expression<Func<TEnum>> valueExpression = () => selectedValue;
+            Expression<Func<TEnum>> onValueExpression = () => selectedValue;
+            var onValueChanged = EventCallback.Factory.Create<TEnum>(receiver, valueChanged);
             return builder =>
             {
                 // Set the selectedValue to the first enum value if it is not set
@@ -30,8 +33,8 @@ namespace DallEImageGenerationImageDemoV4.Utility
 
                 builder.OpenComponent<InputSelect<TEnum>>(0);
                 builder.AddAttribute(1, "Value", selectedValue);
-                builder.AddAttribute(2, "ValueChanged", valueChanged);
-                builder.AddAttribute(3, "ValueExpression", valueExpression);
+                builder.AddAttribute(2, "ValueChanged", onValueChanged);
+                builder.AddAttribute(3, "ValueExpression", onValueExpression);
                 builder.AddAttribute(4, "class", "form-select");  // Adding Bootstrap class for styling
                 builder.AddAttribute(5, "ChildContent", (RenderFragment)(childBuilder =>
                 {
